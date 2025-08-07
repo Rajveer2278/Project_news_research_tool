@@ -12,7 +12,7 @@ from langchain.chains import RetrievalQAWithSourcesChain
 from langchain.chat_models import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 
-# ✅ ✅ ✅ Text-to-Speech (gTTS + Download Button)
+# Text-to-Speech (gTTS + Download Button)
 def text_to_speech_gtts(text):
     tts = gTTS(text, lang='en')
     mp3_fp = BytesIO()
@@ -20,10 +20,10 @@ def text_to_speech_gtts(text):
     mp3_fp.seek(0)
     return mp3_fp
 
-# ✅ Load environment variables (.env)
+#  Load environment variables (.env)
 load_dotenv()
 
-# ✅ Initialize LLM (Groq API)
+#  Initialize LLM (Groq API)
 llm = ChatOpenAI(
     temperature=0.9,
     max_tokens=500,
@@ -32,7 +32,7 @@ llm = ChatOpenAI(
     base_url="https://api.groq.com/openai/v1"
 )
 
-# ✅ Streamlit UI Setup
+#  Streamlit UI Setup
 st.set_page_config(page_title="📰 News Research Tool", layout="wide")
 st.title("📰 News Research Tool 📈")
 st.sidebar.title("News Article URLs")
@@ -47,7 +47,7 @@ process_url_clicked = st.sidebar.button("🚀 Process URLs")
 file_path = "faiss_store.pkl"
 main_placeholder = st.empty()
 
-# ✅ Process URLs
+# Process URLs
 if process_url_clicked:
     loader = UnstructuredURLLoader(urls=urls)
     main_placeholder.info("🚀 Loading articles...")
@@ -66,7 +66,7 @@ if process_url_clicked:
 
     st.success("✅ Articles processed and stored successfully!")
 
-# ✅ Search Query
+#  Search Query
 query = st.text_input("🔍 Enter your research question:")
 if query:
     if os.path.exists(file_path):
@@ -87,8 +87,8 @@ if query:
     else:
         st.error("❌ No processed articles found. Please process URLs first.")
 
-# ✅ ✅ ✅ Summarization Feature (with Downloadable Audio)
-# ✅ Initialize Session State Safely
+#  Summarization Feature (with Downloadable Audio)
+#  Initialize Session State Safely
 if "summary_text" not in st.session_state:
     st.session_state["summary_text"] = None
 if "audio_file" not in st.session_state:
@@ -122,7 +122,7 @@ focusing on **finance, stocks, and market trends**:
     else:
         st.error("❌ Please process URLs before summarization.")
 
-# ✅ Show Summary & Download Only If Available
+#  Show Summary & Download Only If Available
 if st.session_state["summary_text"] and st.session_state["audio_file"]:
     st.subheader("📋 Summary of Articles:")
     st.write(st.session_state["summary_text"])
@@ -135,6 +135,6 @@ if st.session_state["summary_text"] and st.session_state["audio_file"]:
     )
 
 
-# ✅ Footer
+#  Footer
 st.markdown("---")
 st.caption("🚀 Built with ❤️ using Groq, FAISS, HuggingFace, gTTS & Streamlit")
